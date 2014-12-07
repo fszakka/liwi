@@ -1,0 +1,9 @@
+{
+	"node" 		: true,
+	"curly" 	: true,
+	"newcap" 	: true,
+	"nonew" 	: true,
+	"eqnull" 	: true,
+	"undef" 	: true,
+	"unused" 	: true
+}

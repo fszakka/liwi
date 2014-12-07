@@ -1,8 +1,8 @@
 {
   "name": "liwi",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "A LIghtWeight Interface for Web UI",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -12,7 +12,18 @@
     "ui",
     "light",
     "weight",
-    "interface"
+    "interface",
+    "react",
+    "component"
   ],
-  "author": "Maasi"
+  "author": "Maasi",
+  "devDependencies": {
+    "browserify": "^7.0.0",
+    "grunt": "^0.4.5",
+    "grunt-browserify": "^3.2.1",
+    "grunt-contrib-concat": "^0.5.0",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-uglify": "^0.6.0",
+    "jshint-stylish": "^1.0.0"
+  }
 }
