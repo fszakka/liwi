@@ -24,6 +24,11 @@
     "grunt-contrib-concat": "^0.5.0",
     "grunt-contrib-jshint": "^0.10.0",
     "grunt-contrib-uglify": "^0.6.0",
-    "jshint-stylish": "^1.0.0"
+    "grunt-contrib-watch": "^0.6.1",
+    "jshint-stylish": "^1.0.0",
+    "react": "^0.12.1"
+  },
+  "dependencies": {
+    "validators": "^0.3.1"
   }
 }

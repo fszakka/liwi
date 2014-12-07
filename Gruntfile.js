@@ -3,14 +3,30 @@
 module.exports = function ( grunt ) {
 	/* configure grunt */
 
-	var srcDir  = 'lib/**/*.js',
-		destDir = 'dist/',
-		outFile = destDir + '<%= pkg.name %>.js';
+	var srcDir 		= 'lib/',
+		srcFiles 	= srcDir + '**/*.js',
+		destDir 	= 'dist/',
+		outFile 	= destDir + '<%= pkg.name %>.js',
+		implDir 	= 'impl/',
+		implFiles 	= implDir + '**/*';
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
+		watch: {
+			js: {
+				files: [ srcFiles ],
+				tasks: [ 'jshint:all' , 'browserify:main' ]
+			},
+			impl: {
+				files: [ implFiles ],
+				tasks: [ 'jshint:all' , 'browserify:main' ],
+				options: {
+					livereload: true
+				}
+			}
+		},
 		jshint: {
-			all: ['Gruntfile.js', srcDir ],
+			all: ['Gruntfile.js', srcFiles ],
 			options: {
 				jshintrc: '.jshintrc',
 				reporter: require('jshint-stylish')
@@ -18,7 +34,7 @@ module.exports = function ( grunt ) {
 		},
 		browserify: {
 			main: {
-				src: [ srcDir ],
+				src: [ srcFiles ],
 				dest: outFile,
 				options: {
 					debug: true
@@ -38,6 +54,7 @@ module.exports = function ( grunt ) {
 	});
 
 	/* load plugins */
+	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-browserify');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
