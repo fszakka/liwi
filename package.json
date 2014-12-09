@@ -29,6 +29,9 @@
     "react": "^0.12.1"
   },
   "dependencies": {
+    "Concur": "^0.3.0",
+    "concur": "^1.2.2",
+    "isomorph": "^0.3.0",
     "validators": "^0.3.1"
   }
 }

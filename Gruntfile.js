@@ -3,12 +3,14 @@
 module.exports = function ( grunt ) {
 	/* configure grunt */
 
-	var srcDir 		= 'lib/',
-		srcFiles 	= srcDir + '**/*.js',
-		destDir 	= 'dist/',
-		outFile 	= destDir + '<%= pkg.name %>.js',
-		implDir 	= 'impl/',
-		implFiles 	= implDir + '**/*';
+	var
+	srcDir 		= 'lib/',
+	srcFile		= srcDir + 'index.js',
+	srcFiles 	= srcDir + '**/*.js',
+	destDir 	= 'dist/',
+	outFile 	= destDir + '<%= pkg.name %>.js',
+	implDir 	= 'impl/',
+	implFiles 	= implDir + '**/*';
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
@@ -19,7 +21,6 @@ module.exports = function ( grunt ) {
 			},
 			impl: {
 				files: [ implFiles ],
-				tasks: [ 'jshint:all' , 'browserify:main' ],
 				options: {
 					livereload: true
 				}
@@ -34,10 +35,13 @@ module.exports = function ( grunt ) {
 		},
 		browserify: {
 			main: {
-				src: [ srcFiles ],
+				src: [ srcFile ],
 				dest: outFile,
 				options: {
-					debug: true
+					debug: true,
+					browserifyOptions: {
+						standalone: 'Liwi',
+					}
 				}
 			}
 		},

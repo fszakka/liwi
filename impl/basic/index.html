@@ -2,13 +2,25 @@
 <html>
 	<head>
 		<title>Basic Liwi Demo</title>
+		<script src="../../node_modules/react/dist/react.js" charset="utf-8"></script>
 		<script src="../../dist/liwi.js" charset="utf-8"></script>
 	</head>
 	<body>
-		
 
-		<script charset="utf-8">
 
-		</script>
+	<script charset="utf-8">
+	(function ( React, undefined ) {
+
+		var Form = React.createElement(Liwi.BaseForm, {fields: {
+			firstName		: {label: 'First Name', type: 'text'},
+			password		: {label: 'Password', type: 'password'},
+			confirmPassword	: {label: 'Confirm Password', type: 'password'},
+			age				: {label: 'Age', type: 'int'}
+		}})
+
+		React.render( Form , document.body)
+
+	}(window.React))
+	</script>
 	</body>
 </html>

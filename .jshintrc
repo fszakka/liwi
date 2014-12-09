@@ -1,9 +1,17 @@
 {
+	"browser"	: true,
 	"node" 		: true,
 	"curly" 	: true,
-	"newcap" 	: true,
+	"newcap" 	: false,
 	"nonew" 	: true,
 	"eqnull" 	: true,
 	"undef" 	: true,
-	"unused" 	: true
+	"unused" 	: true,
+	"laxcomma"	: true,
+	"asi"		: true,
+	"globals"	: {
+		"React": true
+	}
+
+
 }
