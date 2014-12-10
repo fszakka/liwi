@@ -5,8 +5,11 @@ module.exports = function ( grunt ) {
 
 	var
 	srcDir 		= 'lib/',
+	lessDir		= srcDir + 'css/',
 	srcFile		= srcDir + 'index.js',
 	srcFiles 	= srcDir + '**/*.js',
+	lessFile	= lessDir + 'index.less',
+	lessFiles	= lessDir + '**/*.less',
 	destDir 	= 'dist/',
 	outFile 	= destDir + '<%= pkg.name %>.js',
 	implDir 	= 'impl/',
@@ -15,14 +18,31 @@ module.exports = function ( grunt ) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		watch: {
-			js: {
-				files: [ srcFiles ],
-				tasks: [ 'jshint:all' , 'browserify:main' ]
+			lib: {
+				files: [ srcFiles, lessFiles ],
+				tasks: [ 'jshint:all' , 'browserify:main', 'less:dev' ]
 			},
 			impl: {
 				files: [ implFiles ],
 				options: {
 					livereload: true
+				}
+			}
+		},
+		less: {
+			main: {
+				files: {
+					'dist/liwi.css' : lessFile
+				},
+				options: {
+					path: [ lessDir ],
+					sourceMap: true,
+					cleancss: true
+				}
+			},
+			dev: {
+				files: {
+					'dist/liwi.css' : lessFile
 				}
 			}
 		},
@@ -59,12 +79,14 @@ module.exports = function ( grunt ) {
 
 	/* load plugins */
 	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-contrib-less');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-browserify');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 
 	/* grunt tasks */
 	grunt.registerTask('default' , [
+		'less',
 		'jshint',
 		'browserify',
 		'uglify'

@@ -2,6 +2,7 @@
 <html>
 	<head>
 		<title>Basic Liwi Demo</title>
+		<link rel="stylesheet" href="../../dist/liwi.css" media="screen" title="no title" charset="utf-8">
 		<script src="../../node_modules/react/dist/react.js" charset="utf-8"></script>
 		<script src="../../dist/liwi.js" charset="utf-8"></script>
 	</head>
@@ -11,12 +12,31 @@
 	<script charset="utf-8">
 	(function ( React, undefined ) {
 
-		var Form = React.createElement(Liwi.BaseForm, {fields: {
-			firstName		: {label: 'First Name', type: 'text'},
-			password		: {label: 'Password', type: 'password'},
-			confirmPassword	: {label: 'Confirm Password', type: 'password'},
-			age				: {label: 'Age', type: 'int'}
-		}})
+		var onSubmit = function ( form ) {
+
+			var pass1 = form.data.password,
+				pass2 = form.data.confirmPassword
+
+			if( pass1 !== pass2 ){
+				formErrors.push( 'Password and Confirm Password does not match'  )
+				console.log( 'Password and Confirm Password does not match' )
+			}
+		}
+
+		var data,
+			errors;
+
+		var Form = React.createElement(Liwi.BaseForm, {
+			fields: {
+				firstName		: {label: 'First Name', type: 'text', required: true},
+				password		: {label: 'Password', type: 'password', required: true},
+				confirmPassword	: {label: 'Confirm Password', type: 'password', required: true},
+				age				: {label: 'Age', type: 'int', required: false},
+			},
+			cancel: true,
+			value: 'Send',
+			onSubmit: onSubmit
+		})
 
 		React.render( Form , document.body)
 
