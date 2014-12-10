@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<title>Basic Liwi Demo</title>
-		<link rel="stylesheet" href="../../dist/liwi.css" media="screen" title="no title" charset="utf-8">
+		<link rel="stylesheet" href="../../dist/liwi.css" charset="utf-8">
 		<script src="../../node_modules/react/dist/react.js" charset="utf-8"></script>
 		<script src="../../dist/liwi.js" charset="utf-8"></script>
 	</head>
@@ -15,12 +15,15 @@
 		var onSubmit = function ( form ) {
 
 			var pass1 = form.data.password,
-				pass2 = form.data.confirmPassword
+				pass2 = form.data.confirmPassword,
+				formErrors = []
 
 			if( pass1 !== pass2 ){
 				formErrors.push( 'Password and Confirm Password does not match'  )
 				console.log( 'Password and Confirm Password does not match' )
 			}
+
+			console.log( form.data )
 		}
 
 		var data,
@@ -28,10 +31,12 @@
 
 		var Form = React.createElement(Liwi.BaseForm, {
 			fields: {
-				firstName		: {label: 'First Name', type: 'text', required: true},
+				firstName		: {label: 'First Name', type: 'textbox', required: true},
 				password		: {label: 'Password', type: 'password', required: true},
 				confirmPassword	: {label: 'Confirm Password', type: 'password', required: true},
-				age				: {label: 'Age', type: 'int', required: false},
+				age				: {label: 'Age', type: 'intbox', required: false},
+				gender			: {label: 'Gender', type: 'combobox', options: [{gender: 'Male'},{gender: 'Female'}]},
+				comment			: {label: 'Comment', type: 'textarea'}
 			},
 			cancel: true,
 			value: 'Send',

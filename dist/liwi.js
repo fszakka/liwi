@@ -15,7 +15,7 @@ Field = function( props ){
 		/**
 		* Render a TextBox Field
 		*/
-		case 'text':
+		case 'textbox':
 			return React.createElement(Fields.TextBox, props)
 			break
 		/**
@@ -27,14 +27,26 @@ Field = function( props ){
 		/**
 		* Render a TextBox Field
 		*/
-		case 'int':
+		case 'intbox':
 			return React.createElement(Fields.IntegerBox, props)
+			break
+		/**
+		* Render a TextArea Field
+		*/
+		case 'textarea':
+			return React.createElement(Fields.TextArea, props)
 			break
 		/**
 		* Render a Submit Field
 		*/
 		case 'submit':
 			return React.createElement(Fields.Submit, props)
+			break
+		/**
+		* Render a Select Field
+		*/
+		case 'combobox':
+			return React.createElement(Fields.DropDownList, props)
 			break
 		/**
 		* Am Blowing Up, can't believe you did nothing, jerk
@@ -235,6 +247,36 @@ Label = React.createClass({displayName: 'Label',
 	},
 })
 
+var DL = React.createClass({displayName: 'DL',
+
+	render: function (  ) {
+
+		return React.DOM.dl({className: 'liwi-dl'},
+			this.props.children
+		)
+	},
+})
+
+var DT = React.createClass({displayName: 'DT',
+
+	render: function (  ) {
+
+		return React.DOM.dt({className: 'liwi-dt'},
+			this.props.children
+		)
+	},
+})
+
+var DD = React.createClass({displayName: 'DLD',
+
+	render: function (  ) {
+
+		return React.DOM.dd({className: 'liwi-dd'},
+			this.props.children
+		)
+	},
+})
+
 var
 /**
 * HTML <input type='text|password' />
@@ -245,9 +287,9 @@ TextBox = React.createClass({displayName: 'TextBox',
 	componentDidMount: function () {
 	},
 	render: function ( ) {
-
-		return React.DOM.dl({className: 'liwi-dl'},
-			React.DOM.dt({className: 'liwi-dt'},
+		var type = this.props.type === 'textbox' ? 'text' : this.props.type
+		return React.createElement(DL, null,
+			React.createElement(DT, null,
 				React.createElement(
 					Label,
 					{
@@ -256,11 +298,11 @@ TextBox = React.createClass({displayName: 'TextBox',
 					}
 				)
 			),
-			React.DOM.dd({className: 'liwi-dd'},
+			React.createElement(DD, null,
 				React.DOM.input(
 					{
 						className: 'liwi-input',
-						type: this.props.type,
+						type: type,
 						name: this.props.name,
 						id: this.props.name,
 						ref: this.props.ref,
@@ -287,8 +329,8 @@ IntegerBox = React.createClass({displayName: 'IntegerBox',
 	mixins: [ mixins.IntegerBoxMixin ],
 	render: function (  ) {
 
-		return React.DOM.dl({className: 'liwi-dl'},
-			React.DOM.dt({className: 'liwi-dt'},
+		return React.createElement(DL, null,
+			React.createElement(DT, null,
 				React.createElement(
 					Label,
 					{
@@ -297,7 +339,7 @@ IntegerBox = React.createClass({displayName: 'IntegerBox',
 					}
 				)
 			),
-			React.DOM.dd({className: 'liwi-dd'},
+			React.createElement(DD, null,
 				React.DOM.input(
 					{
 						className: 'liwi-input',
@@ -308,6 +350,97 @@ IntegerBox = React.createClass({displayName: 'IntegerBox',
 						onChange: this.onChange,
 						onBlur: this.onBlur,
 					}
+				),
+				React.createElement(
+					ErrorSpan,
+					{errorSpan: this.state.errorSpan}
+				)
+			)
+		)
+	},
+})
+
+var
+/**
+* HTML <textarea ><textarea>
+*/
+TextArea = React.createClass({displayName: 'TextArea',
+
+	mixins: [ mixins.TextAreaMixin],
+	render: function (  ) {
+
+		var dtStyle = {
+			verticalAlign: 'top'
+		}
+		var taStyle = {
+			maxWidth: '248px'
+		}
+
+		return React.createElement(DL, null,
+			React.DOM.dt({className: 'liwi-dt', style: dtStyle},
+				React.createElement(
+					Label,
+					{
+						label: this.props.label,
+						htmlFor: this.props.name
+					}
+				)
+			),
+			React.createElement(DD, null,
+				React.DOM.textarea(
+					{
+						className: 'liwi-textarea',
+						style: taStyle,
+						name: this.props.name,
+						id: this.props.name,
+						rows: this.props.rows,
+						ref: this.props.ref,
+						onChange: this.onChange,
+						onBlur: this.onBlur,
+					}
+				),
+				React.createElement(
+					ErrorSpan,
+					{errorSpan: this.state.errorSpan}
+				)
+			)
+		)
+	},
+})
+
+var
+DropDownList = React.createClass({displayName: 'DropDownList',
+
+	mixins: [mixins.DropDownListMixin],
+	render: function () {
+
+		return React.createElement(DL, null,
+			React.createElement(DT, null,
+				React.createElement(
+					Label,
+					{
+						label: this.props.label,
+						htmlFor: this.props.name
+					}
+				)
+			),
+			React.createElement(DD, null,
+				React.DOM.select(
+					{
+						className: 'liwi-select',
+						ref: this.props.ref,
+						onChange: this.onChange
+					},
+					this.props.options.map(function ( option, k ) {
+						return React.DOM.option(
+							{
+								value: option.gender,
+								key: k,
+								name: this.props.name
+							},
+							option.gender
+						)
+					}, this)
 				),
 				React.createElement(
 					ErrorSpan,
@@ -338,7 +471,9 @@ Submit = React.createClass({displayName: 'Submit',
 module.exports = {
 	TextBox				: TextBox,
 	IntegerBox			: IntegerBox,
-	Submit				: Submit
+	TextArea			: TextArea,
+	DropDownList		: DropDownList,
+	Submit				: Submit,
 }
 
 },{"./mixins":5}],3:[function(require,module,exports){
@@ -441,9 +576,52 @@ IntegerBoxMixin = {
 	},
 }
 
+var
+TextAreaMixin = {
+	getInitialState: function () {
+		return {
+			value: '',
+			isRequired: this.props.required,
+			isValid: false,
+			errorSpan: ''
+		}
+	},
+	validate: function ( value ) {
+		if ( value ) {
+			this.setState({ value: value })
+		}
+	},
+	onChange: function ( e ) {
+		this.validate( e.target.value )
+	},
+	onBlur: function ( e ) {
+		this.validate( e.target.value )
+	},
+}
+
+var
+DropDownListMixin = {
+	getInitialState: function () {
+		return {
+			isRequired: this.props.required,
+			isValid: false,
+			errorSpan: ''
+		}
+	},
+	onChange: function ( e ) {
+		this.setState({ value: e.target.value })
+
+		if ( this.props.onChage ) {
+			this.props.onChange( e )
+		}
+	},
+}
+
 module.exports = {
 	TextBoxMixin 		: TextBoxMixin,
 	IntegerBoxMixin		: IntegerBoxMixin,
+	TextAreaMixin		: TextAreaMixin,
+	DropDownListMixin	: DropDownListMixin
 }
 
 },{"./messages":4}],6:[function(require,module,exports){
