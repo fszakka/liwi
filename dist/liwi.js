@@ -200,7 +200,7 @@ BaseForm = React.createClass({displayName: 'BaseForm',
 })
 
 module.exports = {
-	BaseForm	: BaseForm,
+	BaseForm	: BaseForm
 }
 
 },{"./fields":2,"./messages":4,"./object":6}],2:[function(require,module,exports){
@@ -473,7 +473,7 @@ module.exports = {
 	IntegerBox			: IntegerBox,
 	TextArea			: TextArea,
 	DropDownList		: DropDownList,
-	Submit				: Submit,
+	Submit				: Submit
 }
 
 },{"./mixins":5}],3:[function(require,module,exports){
@@ -487,7 +487,7 @@ object = require( './object' )
 
 module.exports = {
 	BaseForm	: base.BaseForm,
-	Type		: object.type,
+	Type		: object.type
 }
 
 },{"./base":1,"./object":6}],4:[function(require,module,exports){
